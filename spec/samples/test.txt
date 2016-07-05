@@ -1,0 +1,19 @@
+LIBRARY OF CONGRESS CLASSIFICATION OUTLINE
+
+CLASS A - GENERAL WORKS
+
+Subclass AC
+
+AC1-999 Collections.  Series.  Collected works
+AC1-195   Collections of monographs, essays, etc.
+AC1-8     American and English
+AC9-195     Other languages
+AC200   Collections for Jewish readers
+AC801-895   Inaugural and program dissertations
+AC901-995   Pamphlet collections
+AC999   Scrapbooks
+
+Subclass AE
+
+AE1-(90)  Encyclopedias
+AE5-(90)    By language
