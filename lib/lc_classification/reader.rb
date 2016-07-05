@@ -13,18 +13,32 @@ module LcClassification
     end
 
     def read
-      @continuation = ''
+      last_match = nil
       File.open(path) do |f|
         while line = f.gets
           tmp = line.strip
-          if is_continuation?(tmp)
-
-          else
-            match = REGEX.match(tmp)
+          match = REGEX.match(tmp)
+          if match
+            yield(node_from_match(last_match)) if last_match
+            last_match = match.to_a
+          elsif is_continuation?(tmp) && last_match
+            last_match[6] += " #{ tmp }"
+          elsif last_match
+            yield(node_from_match(last_match))
+            last_match = nil
           end
         end
       end
-      yield(@continuation) if block_given?
+      yield(node_from_match(last_match))
+    end
+
+    def node_from_match match
+      return nil unless match && match.length > 6
+      prefix = match[1]
+      lo = match[2]
+      hi = match[4] ? match[4] : match[2]
+      description = match[6]
+      Node.new(prefix, LcClassification::Value.lo_value(lo), LcClassification::Value.hi_value(hi), description)
     end
 
     def unparsed_line?

@@ -1,0 +1,14 @@
+LIBRARY OF CONGRESS CLASSIFICATION OUTLINE
+
+CLASS A - GENERAL WORKS
+
+Subclass AC
+
+AC1-999 Collections.  Series.  Collected works. This is a continuation of first 
+  entry.
+AC1-195   Collections of monographs, essays, etc.
+  This is a continuation
+  of second entry.
+AC999   Scrapbooks
+  This is a continuation of
+  third entry.

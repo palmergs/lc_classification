@@ -35,7 +35,24 @@ RSpec.describe LcClassification::Reader, as: :model do
     end
   end
 
-  it 'can read a file and pass nodes to block' do
-    reader = LcClassification::Reader.new('spec/samples/test.txt')
+  describe '#read' do
+    it 'can read a file and pass nodes to block' do
+      reader = LcClassification::Reader.new('spec/samples/test.txt')
+      cnt = 0
+      expect {
+        reader.read {|node| cnt += 1 }
+      }.to change { cnt }.from(0).to(10)
+    end
+
+    it 'can read a file and append additional lines' do
+      reader = LcClassification::Reader.new('spec/samples/continuation.txt')
+      arr = []
+      reader.read {|node| arr << node }
+
+      expect(arr.length).to eq(3)
+      expect(arr[0].description).to end_with('This is a continuation of first entry.')
+      expect(arr[1].description).to end_with('This is a continuation of second entry.')
+      expect(arr[2].description).to end_with('This is a continuation of third entry.')
+    end
   end
 end
