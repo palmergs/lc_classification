@@ -1,8 +1,11 @@
 # LcClassification
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/lc_classification`. To experiment with that code, run `bin/console` for an interactive prompt.
+LcClassification is a simple lookup gem for returning categories from Library of
+Congress classification strings. The basic format is `AA###.####` where a one or
+two letter prefix determines the broad category and numbers break it out into
+more specific subcategories.
 
-TODO: Delete this and the text above, and describe your gem
+The categories in this gem are parsed from a text file originally found here: [http://archive.org/stream/LcClassificationA-z/lc_class.txt].
 
 ## Installation
 
@@ -22,7 +25,25 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Because the gem reads a text file on initialization it is recommended that it
+be instantiated once (perhaps wrapped as a Singleton) if it is going to be used
+multiple time.
+
+```ruby
+
+# reads copy of file in data/library-of-congress-classification.txt by default
+lookup = LcClassification::Lookup.new
+node = lookup.find('AC903')
+node.description #> "Pamphlet Collections"
+node.parent.description #> "Collections of monographs, essays, etc."
+node.parent.parent.description #> "Collections.  Series.  Collected works"
+
+node.description.path #> [
+#> "Collections.  Series.  Collected works", 
+#> "Collections of monographs, essays, etc.",  
+#> "Pamphlet Collections"  
+#> ]
+```
 
 ## Development
 
@@ -38,4 +59,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
