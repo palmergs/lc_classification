@@ -23,6 +23,11 @@ module LcClassification
       new(val, subvalue: subval, exclude: (exclude ? :hi : nil))
     end
 
+    # def self.search_value str
+    #   val, subval, exclude = parse_str(str)
+    #   new(val, subvalue: subval, exclude: nil)
+    # end
+
     attr_reader :value, :subvalue, :exclude
     def initialize value, subvalue: nil, exclude: nil
       @exclude = [ :lo, :hi ].include?(exclude) ? exclude : nil
@@ -51,9 +56,13 @@ module LcClassification
     end
 
     def <=> rhs
-      return 0 if rhs.value == value && rhs.subvalue == subvalue
-      return -1 if value < rhs.value || (value == rhs.value && subvalue < rhs.subvalue)
-      return 1
+      if rhs.value == value && rhs.subvalue == subvalue
+        0
+      elsif value < rhs.value || (value == rhs.value && subvalue < rhs.subvalue)
+        -1
+      else
+        1
+      end
     end
 
     def to_s
