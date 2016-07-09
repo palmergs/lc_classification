@@ -28,7 +28,6 @@ module LcClassification
       if match
         prefix = match[1]
         root = prefix_hash[prefix]
-p [ prefix, match.to_a, root.to_s ]
         root.find(Value.new(match[2].to_i, subvalue: match[3].to_i))
       else
         nil

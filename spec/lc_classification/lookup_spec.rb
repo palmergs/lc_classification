@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe LcClassification::Lookup, as: :model do
   it 'can be instantiated with a file path' do
-    lookup = LcClassification::Lookup.new('spec/samples/test.txt')  
+    lookup = LcClassification::Lookup.new('spec/samples/test.txt')
     expect(lookup.find('AC1').description).to eq('American and English')
     expect(lookup.find('AC999').description).to eq('Scrapbooks')
     expect(lookup.find('AC9').description).to eq('Other languages')

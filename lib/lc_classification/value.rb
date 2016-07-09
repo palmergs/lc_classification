@@ -23,11 +23,6 @@ module LcClassification
       new(val, subvalue: subval, exclude: (exclude ? :hi : nil))
     end
 
-    # def self.search_value str
-    #   val, subval, exclude = parse_str(str)
-    #   new(val, subvalue: subval, exclude: nil)
-    # end
-
     attr_reader :value, :subvalue, :exclude
     def initialize value, subvalue: nil, exclude: nil
       @exclude = [ :lo, :hi ].include?(exclude) ? exclude : nil

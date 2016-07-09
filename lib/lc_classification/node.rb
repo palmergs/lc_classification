@@ -35,7 +35,18 @@ module LcClassification
       min > node.max
     end
 
+    def path
+      if parent
+        parent.path + [ self.description ]
+      else
+        [ self.description ]
+      end
+    end
+
     def insert new_node
+      raise 'New node must share prefix' unless new_node.prefix == prefix
+      raise "New node must be within current node" unless new_node.min >= min && new_node.max <= max
+
       len = children.length
       if len == 0
         new_node.parent = self
@@ -51,7 +62,6 @@ module LcClassification
       if len == 0
         value.in?(min, max) ? self : nil
       else
-p "len=#{ len }"
         recurse_find(len / 2, len / 4, value)
       end
     end
