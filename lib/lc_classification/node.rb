@@ -13,16 +13,6 @@ module LcClassification
       @parent = nil
     end
 
-    def insert lc_node
-      len = children.length
-      if len == 0
-        children << lc_node
-      else
-        idx = len / 2
-        recurse_insert(idx, lc_node)
-      end
-    end
-
     def include? node
       min <= node.min && max >= node.max
     end
@@ -44,8 +34,11 @@ module LcClassification
     end
 
     def insert new_node
-      raise 'New node must share prefix' unless new_node.prefix == prefix
-      raise "New node must be within current node" unless new_node.min >= min && new_node.max <= max
+p "X:#{ prefix }:#{ to_s }"
+p "N:#{ new_node.prefix }:#{ new_node.to_s }"
+
+      raise "New node (#{ new_node.prefix }) must share prefix (#{ prefix })" unless new_node.prefix == prefix
+      raise "New node #{ new_node.prefix }#{ new_node.min }-#{ new_node.max } must be within current node #{ min }-#{ max }" unless new_node.min >= min && new_node.max <= max
 
       len = children.length
       if len == 0
@@ -74,15 +67,16 @@ module LcClassification
 
       def recurse_insert idx, delta, new_node
         node = children[idx]
+p "C:#{ node.prefix }:#{ node.to_s }:#{ idx }:#{ delta }"
         if node.include?(new_node)
           # 1. if new_node is subset of existing node, append to existing node
           node.insert(new_node)
         elsif node.after?(new_node)
           # 2. insert before existing node; if previous node is before this node
-          recurse_before(idx, idx / 2, new_node)
+          recurse_before(idx - delta, delta == 0 ? 1 : delta / 2, new_node)
         else
           # 3. insert before next node if next node is after this node
-          recurse_after(idx, idx / 2, new_node)
+          recurse_after(idx + delta, delta == 0 ? 1 : delta / 2, new_node)
         end
       end
 
@@ -96,8 +90,7 @@ module LcClassification
           children.insert(idx, new_node)
           return idx
         else
-          delta = 1 if delta == 0
-          return recurse_insert(idx - delta, delta / 2, new_node)
+          return recurse_insert(idx - delta, delta == 0 ? 1 : delta / 2, new_node)
         end
       end
 
@@ -107,8 +100,7 @@ module LcClassification
           children.insert(idx + 1, new_node)
           return idx + 1
         else
-          delta = 1 if delta == 0
-          return recurse_insert(idx + delta, delta / 2, new_node)
+          return recurse_insert(idx + delta, delta == 0 ? 1 : delta / 2, new_node)
         end
       end
 

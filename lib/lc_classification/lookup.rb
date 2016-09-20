@@ -14,9 +14,18 @@ module LcClassification
         if new_node
           node = prefix_hash[new_node.prefix]
           if node
+# p "#{ node.prefix }:#{ node.to_s }"
+# p "#{ new_node.prefix }:#{ new_node.to_s }"
             node.insert(new_node)
           else
-            prefix_hash[new_node.prefix] = new_node
+            root_node = LcClassification::Node.new(new_node.prefix,
+                LcClassification::Value.new(0),
+                LcClassification::Value.new(9999),
+                new_node.prefix)
+p "roo:#{ root_node.to_s }"
+p "new:#{ new_node.to_s }"
+            root_node.insert(new_node)
+            prefix_hash[new_node.prefix] = root_node
           end
         end
       end

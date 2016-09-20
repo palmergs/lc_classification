@@ -39,7 +39,8 @@ node.parent.description #> "Collections of monographs, essays, etc."
 node.parent.parent.description #> "Collections.  Series.  Collected works"
 
 node.description.path #> [
-#> "Collections.  Series.  Collected works", 
+#> "AC",
+#> "Collections.  Series.  Collected works",
 #> "Collections of monographs, essays, etc.",  
 #> "Pamphlet Collections"  
 #> ]
